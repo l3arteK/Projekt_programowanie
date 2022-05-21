@@ -3,11 +3,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 public class Main {
     static JFrame frame = new JFrame();
     public static void main(String[] args) throws InterruptedException {
         //frame.setLayout(new GridLayout(10,10,1,1));
+
+
+        ArrayList<Drivers> drivers = new ArrayList<>();
+        ArrayList<Objects> objects = new ArrayList<>();
+
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,800);
