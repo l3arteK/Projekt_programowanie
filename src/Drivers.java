@@ -1,10 +1,12 @@
+import java.util.ArrayList;
+
 public class Drivers
 {
-    int id_dr;
-    int fuel;
-    int tires;
-    int x_cord;
-    int y_cord;
+    protected int id_dr;
+    private int fuel;
+    private int tires;
+    protected int x_cord;
+    protected int y_cord;
 
     public Drivers(int id_dr, int fuel, int tires, int x_cord, int y_cord){
         this.id_dr = id_dr;
@@ -14,8 +16,7 @@ public class Drivers
         this.y_cord = y_cord;
     }
 
-    public Drifter drifter;
-    public Common_driver common_driver;
-    public Police police;
-    public Good_boys good_boys;
+    /*Drifter drifter = new Drifter(1,25,30,5,5);
+    Common_driver common_driver = new Common_driver(2, 50,50,2,4);
+    Police police = new Police(3,0,0,8,6);*/
 }

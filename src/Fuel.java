@@ -1,9 +1,6 @@
-public class Fuel {
-    private int amount = 30;
+public class Fuel extends Objects{
 
-    public void increase_amount_fuel() {
-        this.amount += 1;
+    public Fuel(int amount, int id_ob, int x_cord, int y_cord) {
+        super(amount, id_ob, x_cord, y_cord);
     }
-    // zamysl byl taki, ze przy metodzie kolizji bedzie po prostu wywolywana ta metoda
-    // bo ona ma na celu zwiekszenia ilosci paliwa na mapie
 }

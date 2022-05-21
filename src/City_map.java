@@ -1,18 +1,23 @@
-
+import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.ArrayList;
 
-public class Main {
+public class City_map extends Simulation{
+
     static JFrame frame = new JFrame();
-    public static void main(String[] args) throws InterruptedException {
+    public static <size_x> void main(String[] args) throws InterruptedException {
         //frame.setLayout(new GridLayout(10,10,1,1));
 
 
-        ArrayList<Drivers> drivers = new ArrayList<>();
-        ArrayList<Objects> objects = new ArrayList<>();
+
+        int size_x = 10;
+        int size_y = 10;
+
+    ArrayList<Drivers> drivers = new ArrayList<>();
+    ArrayList<Objects> objects = new ArrayList<>();
+
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,12 +66,12 @@ public class Main {
                     break;
                 case 2:
                     if(y>1){y=y-1;}
-                   // System.out.println(0);
+                    // System.out.println(0);
                     break;
 
                 case 3:
                     if(x>1){x=x-1;}
-                   // System.out.println(0);
+                    // System.out.println(0);
                     break;
             }
 
@@ -75,5 +80,4 @@ public class Main {
 
 
     }
-
 }
