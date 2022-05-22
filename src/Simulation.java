@@ -17,9 +17,25 @@ public class Simulation {
                drivers.add(new Police(map, Color.blue));
                drivers.add(new Drifter(map, Color.black));
                drivers.add(new Good_boys(map, Color.red));
+            drivers.add(new Common_driver(map, Color.green));
+            drivers.add(new Police(map, Color.blue));
+            drivers.add(new Drifter(map, Color.black));
+            drivers.add(new Good_boys(map, Color.red));
+            drivers.add(new Common_driver(map, Color.green));
+            drivers.add(new Police(map, Color.blue));
+            drivers.add(new Drifter(map, Color.black));
+            drivers.add(new Good_boys(map, Color.red));
+            drivers.add(new Common_driver(map, Color.green));
+            drivers.add(new Police(map, Color.blue));
+            drivers.add(new Drifter(map, Color.black));
+            drivers.add(new Good_boys(map, Color.red));
+            drivers.add(new Common_driver(map, Color.green));
+            drivers.add(new Police(map, Color.blue));
+            drivers.add(new Drifter(map, Color.black));
+            drivers.add(new Good_boys(map, Color.red));
 
                for(;;){
-                   for(int i=0;i<4;i++) {
+                   for(int i=0;i<drivers.size();i++) {
                        drivers.get(i).move();
                    }
                    TimeUnit.SECONDS.sleep(1);

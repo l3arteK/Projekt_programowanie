@@ -13,10 +13,4 @@ public class Objects {
         this.y_cord = y_cord;
     }
 
-    /*public ArrayList<Fuel> fuel = new ArrayList<>();
-    public ArrayList<Tires> tires = new ArrayList<>();
-    public ArrayList<Bread> bread = new ArrayList<>();
-    ArrayList<Sweets> sweets = new ArrayList<>();*/
-
-    Speed_camera speed_camera = new Speed_camera(15,5,1,1);
 }

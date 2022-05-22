@@ -23,19 +23,19 @@ public class Drivers
 
         this.map = map;
         this.color = color;
-        this.x = rand.nextInt(10);
-        this.y = rand.nextInt(10);
+        this.x = rand.nextInt(30);
+        this.y = rand.nextInt(30);
 
     }
 
-    void move() throws InterruptedException{
+    void move(){
         map.panels[x][y].setBackground(Color.gray);
         switch (rand.nextInt(4)){
             case 0:
-                if(x<9){x=x+1;}
+                if(x<29){x=x+1;}
                 break;
             case 1:
-                if(y<9){y=y+1;}
+                if(y<29){y=y+1;}
                 break;
             case 2:
                 if(y>1){y=y-1;}
