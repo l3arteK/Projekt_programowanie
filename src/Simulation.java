@@ -17,6 +17,7 @@ public class Simulation {
                 int chance;
             ArrayList<Drivers> drivers = new ArrayList<Drivers>();
                drivers.add(new Drifter(map));
+               drivers.add(new Drifter(map));
                drivers.add(new Police(map));
                //drivers.add(new Common_driver(map));
 
@@ -77,7 +78,7 @@ public class Simulation {
                            }
                        }
                    }
-                   TimeUnit.SECONDS.sleep(2);
+                   TimeUnit.SECONDS.sleep(1);
 
                }
 

@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 public class City_map {
 
     JFrame frame = new JFrame();
-    int size_x = 3;
-    int size_y = 3;
+    int size_x = 7;
+    int size_y = 7;
     JPanel[][] panels = new JPanel[size_x][size_y];
 
     City_map() {
