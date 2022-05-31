@@ -5,7 +5,8 @@ public class Police extends Drivers{
     private int x_cord;
     private int y_cord;
 
-    public Police(City_map map, Color color) {
-        super(map,color);
+    public Police(City_map map) {
+        super(map);
+        this.color = Color.blue;
     }
 }

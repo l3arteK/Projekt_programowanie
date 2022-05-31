@@ -18,34 +18,39 @@ public class Drivers
     Color color;
     int x;
     int y;
+    int max_x;
+    int max_y;
     Random rand = new Random();
-    public Drivers(City_map map, Color color){
+    public Drivers(City_map map){
 
         this.map = map;
-        this.color = color;
-        this.x = rand.nextInt(30);
-        this.y = rand.nextInt(30);
+        this.max_x = map.size_x;
+        this.max_y = map.size_y;
+        this.x = rand.nextInt(max_x);
+        this.y = rand.nextInt(max_y);
 
     }
 
     void move(){
-        map.panels[x][y].setBackground(Color.gray);
+        //map.panels[x][y].setBackground(Color.gray);
         switch (rand.nextInt(4)){
             case 0:
-                if(x<29){x=x+1;}
+                if(x<max_x - 1){x=x+1;}
+                else{x=x-1;}
                 break;
             case 1:
-                if(y<29){y=y+1;}
+                if(y<max_y - 1){y=y+1;}
+                else{y=y-1;}
                 break;
             case 2:
                 if(y>1){y=y-1;}
+                else{y=y+1;}
                 break;
             case 3:
                 if(x>1){x=x-1;}
+                else{x=x+1;}
                 break;
         }
         map.panels[x][y].setBackground(color);
-
-
     }
 }

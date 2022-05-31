@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 public class City_map {
 
     JFrame frame = new JFrame();
-    int size_x = 30;
-    int size_y = 30;
+    int size_x = 3;
+    int size_y = 3;
     JPanel[][] panels = new JPanel[size_x][size_y];
 
     City_map() {
@@ -25,6 +25,11 @@ public class City_map {
             frame.setVisible(true);
 
         }
+        //int collision(){
+
+
+
+      //  }
 
 
     }
