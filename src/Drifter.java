@@ -1,5 +1,8 @@
 import java.awt.*;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class Drifter extends Drivers
 {
     public Drifter(City_map map) {
@@ -7,12 +10,12 @@ public class Drifter extends Drivers
         this.color = Color.BLACK;
     }
 
-    int i;
+    boolean move;
 
     void move() {
-        map.panels[x][y].setBackground(Color.gray);
+        //map.panels[x][y].setBackground(Color.gray);
 
-        if (i%2==0)
+        if (move)
         {
             switch (rand.nextInt(2)){
                 case 0:
@@ -24,6 +27,7 @@ public class Drifter extends Drivers
                     else{x=x+1;}
                     break;
             }
+            move = FALSE;
         }
         else
         {
@@ -37,9 +41,9 @@ public class Drifter extends Drivers
                     else{y=y+1;}
                     break;
             }
+            move = TRUE;
         }
 
         map.panels[x][y].setBackground(color);
-        i++;
     }
 }
