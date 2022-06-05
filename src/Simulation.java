@@ -13,16 +13,36 @@ public class Simulation {
         public static void main(String[] args) throws InterruptedException {
 
                City_map map = new City_map();
+               boolean przygotowanie = false;
                 Random rand = new Random();
                 int chance;
             ArrayList<Drivers> drivers = new ArrayList<Drivers>();
-               drivers.add(new Drifter(map));
-               drivers.add(new Drifter(map));
-               drivers.add(new Police(map));
-               //drivers.add(new Common_driver(map));
 
+
+            while(map.run == false || przygotowanie == false){
+                System.out.println(map.dane[0]);
+                if(map.run == true && (map.dane[0]!=0 || map.dane[1]!=0 || map.dane[2]!=0))
+                    System.out.println(map.dane[0]);
+                    for (int i = 0; i < map.dane[0]; i++) {
+                        System.out.println(i+"P");
+                        drivers.add(new Police(map));
+                    }
+                    for (int i = 0; i < map.dane[1]; i++) {
+                        drivers.add(new Drifter(map));
+                    }
+                    for (int i = 0; i < map.dane[2]; i++) {
+                        drivers.add(new Common_driver(map));
+                    }
+                    przygotowanie = true;
+            }
+
+            System.out.println("liczba obiektow"+drivers.size());
+            System.out.println(map.dane[0]);
+            System.out.println(map.dane[1]);
+            System.out.println(map.dane[2]);
             int n=0;
-               for(;;){
+               while(map.run){
+                   System.out.println(map.run);
                    n+=1;
                    for(int i=0;i<map.size_x;i++){
                        for(int j=0;j<map.size_y;j++){
