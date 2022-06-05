@@ -5,26 +5,36 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;*/
 
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Simulation {
-        public static void main(String[] args) throws InterruptedException {
+        public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 
                City_map map = new City_map();
+            Date data = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-mm-dd_HH_mm_ss");
+            System.out.println(simpleDateFormat.format(data));
+            PrintWriter zapis = new PrintWriter(simpleDateFormat.format(data)+".txt");
+            zapis.format("%-7s %10s\n","Krok","Liczba driverów");
+
                boolean przygotowanie = false;
                 Random rand = new Random();
                 int chance;
             ArrayList<Drivers> drivers = new ArrayList<Drivers>();
 
 
-            while(map.run == false || przygotowanie == false){
+            while(map.run == false || przygotowanie == false) {
                 System.out.println(map.dane[0]);
-                if(map.run == true && (map.dane[0]!=0 || map.dane[1]!=0 || map.dane[2]!=0))
+                if (map.run == true) {
                     System.out.println(map.dane[0]);
                     for (int i = 0; i < map.dane[0]; i++) {
-                        System.out.println(i+"P");
+                        System.out.println(i + "P");
                         drivers.add(new Police(map));
                     }
                     for (int i = 0; i < map.dane[1]; i++) {
@@ -34,6 +44,7 @@ public class Simulation {
                         drivers.add(new Common_driver(map));
                     }
                     przygotowanie = true;
+                }
             }
 
             System.out.println("liczba obiektow"+drivers.size());
@@ -42,8 +53,10 @@ public class Simulation {
             System.out.println(map.dane[2]);
             int n=0;
                while(map.run){
+
                    System.out.println(map.run);
                    n+=1;
+                   zapis.format("%-7d %10d\n",n,drivers.size());
                    for(int i=0;i<map.size_x;i++){
                        for(int j=0;j<map.size_y;j++){
                            map.panels[i][j].setBackground(Color.gray);
@@ -101,6 +114,8 @@ public class Simulation {
                    TimeUnit.SECONDS.sleep(1);
 
                }
+               zapis.close();
+
 
         }
 

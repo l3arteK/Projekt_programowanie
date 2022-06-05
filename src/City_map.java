@@ -19,19 +19,19 @@ public class City_map extends JFrame implements ActionListener {
     int size_y = 30;
     JPanel[][] panels = new JPanel[size_x][size_y];
 
-    JTextField[] in = new JTextField[3];
-    JLabel[] out = new JLabel[3];
+    JTextField[] in = new JTextField[12];
+    JLabel[] out = new JLabel[12];
     JButton[] buttons = new JButton[2];
     boolean run = false;
-    static int[] dane = new int[10];
+    static int[] dane = new int[15];
     JButton buuton = new JButton();
     String daaaneee;
 
     City_map() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 800);
+        this.setSize(1000, 1000);
         this.setLayout(new BorderLayout());
-        menu.setLayout(new GridLayout(10,1,0,5));
+        menu.setLayout(new GridLayout(26,1,0,20));
         mapa.setLayout(new GridLayout(size_x, size_y, 2, 2));
         //mapa.setBounds(10,10,800,400);
         for (int i = 0; i < size_x; i++) {
@@ -42,7 +42,7 @@ public class City_map extends JFrame implements ActionListener {
             }
         }
 
-        for(int i=0;i<3;i++){
+        for(int i=0;i<12;i++){
             out[i] = new JLabel();
             in[i] = new JTextField();
             out[i].setHorizontalAlignment(JLabel.CENTER);
@@ -50,12 +50,21 @@ public class City_map extends JFrame implements ActionListener {
         out[0].setText("Podaj liczbe policjantow");
         out[1].setText("Podaj liczbe drifterów");
         out[2].setText("Podaj liczbe Zwykłych kierowców");
+        out[3].setText("Mnimalna ilość kanistrów");
+        out[4].setText("Maksymalna ilość kanistrów");
+        out[5].setText("Minimalna ilość opon");
+        out[6].setText("Maksymalna ilość opon");
+        out[7].setText("Minmalna ilość chleba");
+        out[8].setText("Maksymalna ilość chleba");
+        out[9].setText("Minimalna ilość cukierków");
+        out[10].setText("Maksymalna ilość cukierków");
+        out[11].setText("Ilość fotoradarów");
 
 
 
 
 
-        for(int i=0;i<3;i++){
+        for(int i=0;i<12;i++){
             in[i].setPreferredSize(new Dimension(30,20));
             menu.add(out[i]);
             menu.add(in[i]);
@@ -71,7 +80,7 @@ public class City_map extends JFrame implements ActionListener {
 
 
 
-        menu.setMaximumSize(new Dimension(50,50));
+        menu.setPreferredSize(new Dimension(200,1000));
         this.add(mapa,BorderLayout.CENTER);
         this.add(menu,BorderLayout.WEST);
 
@@ -96,13 +105,14 @@ public class City_map extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==buttons[0]){
             buttons[0].setEnabled(false);
-            for(int i=0;i<3;i++){
+            for(int i=0;i<12;i++){
                 dane[i] = Integer.parseInt(in[i].getText());
-                System.out.println("Daaane z mapyy"+dane[i]);
                 in[i].setEditable(false);
             }
+
             run = true;
         }else if(e.getSource()==buttons[1]){
+            run = false;
 
         }
 
