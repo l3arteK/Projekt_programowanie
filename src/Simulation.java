@@ -21,7 +21,7 @@ public class Simulation {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-mm-dd_HH_mm_ss");
             System.out.println(simpleDateFormat.format(data));
             PrintWriter zapis = new PrintWriter(simpleDateFormat.format(data)+".txt");
-            zapis.format("%-7s %10s\n","Krok","Liczba driverów");
+            zapis.format("%-7s %10s %10s %10s %10s\n","Krok","Kierowcy","Obiekty","Policjanci","Zwykli kierowcy");
 
             boolean przygotowanie = false;
             Random rand = new Random();
@@ -31,17 +31,17 @@ public class Simulation {
             ArrayList<Objects> objects = new ArrayList<Objects>();
 
 
-            while(map.run == false || przygotowanie == false) {
+            while(!map.run || !przygotowanie) {
                 System.out.println(map.dane[0]);
-                if (map.run == true) {
+                if (map.run) {
                     System.out.println(map.dane[0]);
 
-                    for (int i = 0; i < map.dane[0]; i++) {
-                        System.out.println(i + "P");
-                        drivers.add(new Police(map, drivers));
-                    }
                     for (int i = 0; i < map.dane[1]; i++) {
+                        System.out.println(i + "P");
                         drivers.add(new Drifter(map));
+                    }
+                    for (int i = 0; i < map.dane[0]; i++) {
+                        drivers.add(new Police(map, drivers));
                     }
                     for (int i = 0; i < map.dane[2]; i++) {
                         drivers.add(new Common_driver(map));
@@ -127,6 +127,7 @@ public class Simulation {
                                         chance = rand.nextInt(2);
                                         if(chance ==1){
                                             drivers.remove(i);
+                                            //System.out.println("Dziala to?~?~?~?~?!?!?!!?");
                                         }
                                     }
                                 }else if(drivers.get(i) instanceof Good_boys){

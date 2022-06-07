@@ -29,9 +29,9 @@ public class City_map extends JFrame implements ActionListener {
 
     City_map() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1000, 1000);
+        this.setSize(600, 600);
         this.setLayout(new BorderLayout());
-        menu.setLayout(new GridLayout(26,1,0,20));
+        menu.setLayout(new GridLayout(26,1,0,5));
         mapa.setLayout(new GridLayout(size_x, size_y, 2, 2));
         //mapa.setBounds(10,10,800,400);
         for (int i = 0; i < size_x; i++) {
@@ -76,7 +76,7 @@ public class City_map extends JFrame implements ActionListener {
         buttons[1] = new JButton();
         buttons[1].addActionListener(this);
         buttons[0].setText("Zatwierdź i wystartuj");
-        buttons[1].setText("Reset");
+        buttons[1].setText("Resetuj i zapisz do pliku");
 
 
 
