@@ -23,9 +23,10 @@ public class Simulation {
             PrintWriter zapis = new PrintWriter(simpleDateFormat.format(data)+".txt");
             zapis.format("%-7s %10s\n","Krok","Liczba driverów");
 
-               boolean przygotowanie = false;
-                Random rand = new Random();
-                int chance;
+            boolean przygotowanie = false;
+            Random rand = new Random();
+            int chance;
+
             ArrayList<Drivers> drivers = new ArrayList<Drivers>();
             ArrayList<Objects> objects = new ArrayList<Objects>();
 
@@ -37,7 +38,7 @@ public class Simulation {
 
                     for (int i = 0; i < map.dane[0]; i++) {
                         System.out.println(i + "P");
-                        drivers.add(new Police(map));
+                        drivers.add(new Police(map, drivers));
                     }
                     for (int i = 0; i < map.dane[1]; i++) {
                         drivers.add(new Drifter(map));
@@ -72,20 +73,22 @@ public class Simulation {
             System.out.println("fotoradar " + map.dane[10]);
 
             int n=0;
+
                while(map.run){
 
                    System.out.println(map.run);
                    n+=1;
                    zapis.format("%-7d %10d\n",n,drivers.size());
-                   for(int i=0;i<map.size_x;i++){
-                       for(int j=0;j<map.size_y;j++){
+                   for(int i=0; i<map.size_x; i++){
+                       for(int j=0; j<map.size_y; j++){
                            map.panels[i][j].setBackground(Color.gray);
                        }
                    }
                    //System.out.println("Clean");
                    //TimeUnit.SECONDS.sleep(2);
-                   for(int i=0;i<drivers.size();i++) {
+                   for(int i=0; i<drivers.size(); i++) {
                        drivers.get(i).move();
+
                        System.out.println(drivers.get(i).x);
                        System.out.println(drivers.get(i).y);
                    }
@@ -99,11 +102,12 @@ public class Simulation {
                    System.out.println("");
                    //check_colision
 
-                   for(int i=0;i<drivers.size()-1;i++){
-                       for(int j=i+1;j<drivers.size();j++){
+                   for(int i=0; i<drivers.size()-1; i++){
+                       for(int j=i+1; j<drivers.size(); j++){
                            if((drivers.get(i).x == drivers.get(j).x) &&(drivers.get(i).y==drivers.get(j).y)){
                                System.out.println("kolizja" + " x:"+drivers.get(i).x+" y: "+drivers.get(i).y+" Klasa: "+drivers.get(i).getClass()+" Klasa2: "+drivers.get(j).getClass());
                                System.out.println(drivers.size());
+
                                 if(drivers.get(i) instanceof Drifter){
                                     if(drivers.get(j) instanceof Drifter){
                                     drivers.remove(i);
@@ -184,8 +188,5 @@ public class Simulation {
 
                }
                zapis.close();
-
-
         }
-
 }
