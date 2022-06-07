@@ -27,12 +27,14 @@ public class Simulation {
                 Random rand = new Random();
                 int chance;
             ArrayList<Drivers> drivers = new ArrayList<Drivers>();
+            ArrayList<Objects> objects = new ArrayList<Objects>();
 
 
             while(map.run == false || przygotowanie == false) {
                 System.out.println(map.dane[0]);
                 if (map.run == true) {
                     System.out.println(map.dane[0]);
+
                     for (int i = 0; i < map.dane[0]; i++) {
                         System.out.println(i + "P");
                         drivers.add(new Police(map));
@@ -43,14 +45,32 @@ public class Simulation {
                     for (int i = 0; i < map.dane[2]; i++) {
                         drivers.add(new Common_driver(map));
                     }
+                    for (int i = 0; i < map.dane[3]; i++) {
+                        objects.add(new Fuel(map));
+                    }
+                    for (int i = 0; i < map.dane[5]; i++) {
+                        objects.add(new Tires(map));
+                    }
+                    for (int i = 0; i < map.dane[7]; i++) {
+                        objects.add(new Bread(map));
+                    }
+                    for (int i = 0; i < map.dane[11]; i++) {
+                        objects.add(new Speed_camera(map));
+                    }
+
                     przygotowanie = true;
                 }
             }
 
-            System.out.println("liczba obiektow"+drivers.size());
-            System.out.println(map.dane[0]);
-            System.out.println(map.dane[1]);
-            System.out.println(map.dane[2]);
+            System.out.println("liczba obiektow " + drivers.size());
+            System.out.println("policja " + map.dane[0]);
+            System.out.println("drifterzy " + map.dane[1]);
+            System.out.println("zwykli kierowcy " + map.dane[2]);
+            System.out.println("paliwo " + map.dane[3]);
+            System.out.println("opony " + map.dane[5]);
+            System.out.println("chleb " + map.dane[7]);
+            System.out.println("fotoradar " + map.dane[10]);
+
             int n=0;
                while(map.run){
 
@@ -68,11 +88,17 @@ public class Simulation {
                        drivers.get(i).move();
                        System.out.println(drivers.get(i).x);
                        System.out.println(drivers.get(i).y);
-
                    }
+
+                   for (int i=0; i<objects.size(); i++) {
+                       objects.get(i).respawn();
+                   }
+
+
                    System.out.println("ruch: "+n);
                    System.out.println("");
                    //check_colision
+
                    for(int i=0;i<drivers.size()-1;i++){
                        for(int j=i+1;j<drivers.size();j++){
                            if((drivers.get(i).x == drivers.get(j).x) &&(drivers.get(i).y==drivers.get(j).y)){
@@ -111,6 +137,49 @@ public class Simulation {
                            }
                        }
                    }
+
+                   for (int i = 0; i < drivers.size(); i++) {
+
+                       for (int j = 0; j < objects.size(); j++) {
+
+                           if ((drivers.get(i).x == objects.get(j).x_cord) && (drivers.get(i).y == objects.get(j).y_cord)) {
+
+
+                               System.out.println("kolizja z obiektem x: " + drivers.get(i).x + " y: " + drivers.get(i).y + " Klasa: " + drivers.get(i).getClass() + " Klasa2: " + objects.get(j).getClass());
+                               //System.out.println(drivers.size());
+
+                               if (drivers.get(i) instanceof Drifter) {
+                                   if (objects.get(j) instanceof Tires) {
+                                       objects.remove(j);
+                                   }
+                                   else if (objects.get(j) instanceof Fuel) {
+                                       objects.remove(j);
+                                   }
+                                   else if (objects.get(j) instanceof Speed_camera) {
+                                       drivers.remove(i);
+                                   }
+                               }
+                               else if (drivers.get(i) instanceof Common_driver) {
+                                   if (objects.get(j) instanceof Bread) {
+                                       objects.remove(j);
+                                   }
+                                   else if (objects.get(j) instanceof Fuel) {
+                                       objects.remove(j);
+                                   }
+                               }
+                               else if (drivers.get(i) instanceof Good_boys) {
+                                   if (objects.get(j) instanceof Sweets) {
+                                       objects.remove(j);
+                                   }
+                               }
+
+                           }
+                       }
+                   }
+
+                   System.out.println("liczba obiektow: " + objects.size());
+                   System.out.println("liczba kierowcow: " + drivers.size());
+
                    TimeUnit.SECONDS.sleep(1);
 
                }

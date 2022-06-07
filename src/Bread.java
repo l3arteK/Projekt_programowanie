@@ -1,6 +1,17 @@
+import java.awt.*;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 public class Bread extends Objects{
 
-    public Bread(int amount, int id_ob, int x_cord, int y_cord) {
-        super(amount, id_ob, x_cord, y_cord);
+    Objects objects;
+    Random rand = new Random();
+
+    public Bread(City_map map) {
+        super(map);
+
+        this.color = Color.pink;
+        this.x_cord = rand.nextInt(map.size_x);
+        this.y_cord = rand.nextInt(map.size_x);
     }
 }
