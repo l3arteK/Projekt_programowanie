@@ -15,38 +15,31 @@ import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 
-    static int liczba_drifterow = 0;
-   static int liczba_dobrych_chlopakow = 0;
-   static int liczba_policjantow = 0;
-    static int liczba_zwyklych_kierowcow = 0;
-    static int liczba_opon=0;
-    static int liczba_kanistrow=0;
-    static int liczba_fotoradarow=0;
-    static int liczba_cukierkow=0;
-    static int liczba_kolizj=0;
+    static int[] dane_do_zapisu = new int[10];
     static int n;
    static Date data = new Date();
 
 
    static void liczenie(ArrayList<Drivers> kierowcy, ArrayList<Objects> objekty){
+       for(int i=0;i<10;i++){dane_do_zapisu[i]=0;}
        for(Drivers kierowca:kierowcy){
            if(kierowca instanceof Drifter)
-               liczba_drifterow+=1;
+               dane_do_zapisu[0]+=1;
            if(kierowca instanceof Police)
-               liczba_policjantow+=1;
+               dane_do_zapisu[1]+=1;
            if(kierowca instanceof Good_boys)
-               liczba_dobrych_chlopakow+=1;
+               dane_do_zapisu[2]+=1;
            if(kierowca instanceof Common_driver)
-               liczba_zwyklych_kierowcow+=1;}
+               dane_do_zapisu[3]+=1;}
        for(Objects obiekt:objekty){
            if(obiekt instanceof Tires)
-               liczba_opon+=1;
+               dane_do_zapisu[4]+=1;
            if(obiekt instanceof Fuel)
-               liczba_kanistrow+=1;
+               dane_do_zapisu[5]+=1;
            if(obiekt instanceof Speed_camera)
-               liczba_fotoradarow +=1;
+               dane_do_zapisu[6]+=1;
            if(obiekt instanceof Sweets)
-               liczba_cukierkow+=1;}
+               dane_do_zapisu[7]+=1;}
    }
         public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 
@@ -55,7 +48,7 @@ public class Simulation {
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-mm-dd_HH_mm_ss");
             PrintWriter zapis = new PrintWriter(simpleDateFormat.format(data)+".txt");
-            zapis.format("%-7s %15s %15s %15s %15s %15s %15s %15s %15s %15s %15s %15s\n","Krok","Kolizja","Kierowcy","Obiekty","Policjanci","Zwykli_kierowcy","Drifterzy","Dobre chłopaki","Opony","Kanistry","Cukierki","Fotoradary");
+            zapis.format("%-7s %15s %15s %15s %15s %15s %15s %15s %15s %15s %15s %25s %35s \n","Krok","Kierowcy","Obiekty","Policjanci","Zwykli_kierowcy","Drifterzy","Dobre chłopaki","Opony","Kanistry","Fotoradary","Cukierki","Kolizje_między_kierowcami","Kolizje_kierowcow_między_obiektami");
 
             boolean przygotowanie = false;
             Random rand = new Random();
@@ -66,7 +59,7 @@ public class Simulation {
     for(;;) {
         if (map.run && !przygotowanie) {
             for (int i = 0; i < map.dane[1]; i++) {
-                System.out.println(i + "P");
+                //System.out.println(i + "P");
                 drivers.add(new Drifter(map));
             }
             for (int i = 0; i < map.dane[0]; i++) {
@@ -94,7 +87,7 @@ public class Simulation {
 
                 liczenie(drivers,objects);
 
-                zapis.format("%-7d %15d %15d %15d %15d %15d %15d %15d %15d %15d %15d\n",n,drivers.size(),objects.size(),liczba_policjantow,liczba_zwyklych_kierowcow,liczba_drifterow,liczba_dobrych_chlopakow,liczba_opon,liczba_kanistrow,liczba_cukierkow,liczba_fotoradarow);
+                zapis.format("%-7d %15d %15d %15d %15d %15d %15d %15d %15d %15d %15d %25d %35d\n",n,drivers.size(),objects.size(),dane_do_zapisu[0],dane_do_zapisu[1],dane_do_zapisu[2],dane_do_zapisu[3],dane_do_zapisu[4],dane_do_zapisu[5],dane_do_zapisu[6],dane_do_zapisu[7],dane_do_zapisu[8],dane_do_zapisu[9]);
                 for(int i=0; i<map.size_x; i++){
                     for(int j=0; j<map.size_y; j++){
                         map.panels[i][j].setBackground(Color.gray);
@@ -102,23 +95,23 @@ public class Simulation {
                 }
                 for (Drivers driver : drivers) {
                     driver.move();
-                    System.out.println(driver.x);
-                    System.out.println(driver.y);
+                    //System.out.println(driver.x);
+                    //System.out.println(driver.y);
                 }
                 for (Objects object : objects) {
                     object.respawn();
                 }
 
 
-                System.out.println("ruch: "+n);
-                System.out.println("");
+                //System.out.println("ruch: "+n);
+               // System.out.println("");
                 //check_colision
 
                 for(int i=0; i<drivers.size()-1; i++){
                     for(int j=i+1; j<drivers.size(); j++){
                         if((drivers.get(i).x == drivers.get(j).x) &&(drivers.get(i).y==drivers.get(j).y)){
-                            System.out.println("kolizja" + " x:"+drivers.get(i).x+" y: "+drivers.get(i).y+" Klasa: "+drivers.get(i).getClass()+" Klasa2: "+drivers.get(j).getClass());
-
+                          //  System.out.println("kolizja" + " x:"+drivers.get(i).x+" y: "+drivers.get(i).y+" Klasa: "+drivers.get(i).getClass()+" Klasa2: "+drivers.get(j).getClass());
+                            dane_do_zapisu[8]+=1;
 
                             if(drivers.get(i) instanceof Drifter){
                                 if(drivers.get(j) instanceof Drifter){
@@ -161,9 +154,8 @@ public class Simulation {
                         if ((drivers.get(i).x == objects.get(j).x_cord) && (drivers.get(i).y == objects.get(j).y_cord)) {
 
 
-                            System.out.println("kolizja z obiektem x: " + drivers.get(i).x + " y: " + drivers.get(i).y + " Klasa: " + drivers.get(i).getClass() + " Klasa2: " + objects.get(j).getClass());
-                            //System.out.println(drivers.size());
-
+                           // System.out.println("kolizja z obiektem x: " + drivers.get(i).x + " y: " + drivers.get(i).y + " Klasa: " + drivers.get(i).getClass() + " Klasa2: " + objects.get(j).getClass());
+                            dane_do_zapisu[9]+=1;
                             if (drivers.get(i) instanceof Drifter) {
                                 if (objects.get(j) instanceof Tires) {
                                     objects.remove(j);
@@ -193,8 +185,8 @@ public class Simulation {
                     }
                 }
 
-                System.out.println("liczba obiektow: " + objects.size());
-                System.out.println("liczba kierowcow: " + drivers.size());
+                //System.out.println("liczba obiektow: " + objects.size());
+                //System.out.println("liczba kierowcow: " + drivers.size());
 
                 TimeUnit.SECONDS.sleep(1);
 
@@ -211,19 +203,5 @@ public class Simulation {
         }
     }
 
-/*
-            System.out.println("liczba obiektow " + drivers.size());
-            System.out.println("policja " + map.dane[0]);
-            System.out.println("drifterzy " + map.dane[1]);
-            System.out.println("zwykli kierowcy " + map.dane[2]);
-            System.out.println("paliwo " + map.dane[3]);
-            System.out.println("opony " + map.dane[5]);
-            System.out.println("chleb " + map.dane[7]);
-            System.out.println("fotoradar " + map.dane[10]);
-
-
-               zapis.close();
-
- */
         }
 }

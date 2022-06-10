@@ -5,6 +5,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JTextField;
@@ -102,15 +104,38 @@ public class City_map extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==buttons[0]){
-            buttons[0].setEnabled(false);
-            buttons[1].setEnabled(true);
-            for(int i=0;i<12;i++){
-                dane[i] = Integer.parseInt(in[i].getText());
+        int k=0;
+        char[] chars;
+        StringBuilder sb;
+        String text;
+        if(e.getSource()==buttons[0]) {
+            for (int i = 0; i < 12; i++) {
+                sb = new StringBuilder();
+                if(!Objects.equals(in[i].getText(), "")){
+                chars = in[i].getText().toCharArray();
+                System.out.println("chars: "+ Arrays.toString(chars));
+                for (char c : chars) {
+                    if (Character.isDigit(c)) {
+                        sb.append(c);
+                    }
+                }text = String.valueOf(sb);
+                System.out.println("text"+text);
+                if(!Objects.equals(text, "")){
+                    dane[i] = parseInt(text);
+                    in[i].setEditable(false);
+                    k+=1;
+                }
+            }else{
+                k+=1;
                 in[i].setEditable(false);
+                dane[i] = 0;
+                }
             }
-
-            run = true;
+            if(k==12){
+                run = true;
+                buttons[0].setEnabled(false);
+                buttons[1].setEnabled(true);
+            }
         }else if(e.getSource()==buttons[1]){
             run = false;
             buttons[0].setEnabled(true);
