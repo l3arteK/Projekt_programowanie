@@ -10,7 +10,7 @@ public class Sweets extends Objects{
     public Sweets(City_map map) {
         super(map);
 
-        this.color = Color.GREEN;
+        this.color = Color.yellow;
         this.x_cord = rand.nextInt(map.size_x);
         this.y_cord = rand.nextInt(map.size_x);
     }
