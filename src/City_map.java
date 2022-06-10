@@ -25,7 +25,6 @@ public class City_map extends JFrame implements ActionListener {
     boolean run = false;
     static int[] dane = new int[15];
     JButton buuton = new JButton();
-    String daaaneee;
 
     City_map() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,6 +104,7 @@ public class City_map extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==buttons[0]){
             buttons[0].setEnabled(false);
+            buttons[1].setEnabled(true);
             for(int i=0;i<12;i++){
                 dane[i] = Integer.parseInt(in[i].getText());
                 in[i].setEditable(false);
@@ -113,6 +113,11 @@ public class City_map extends JFrame implements ActionListener {
             run = true;
         }else if(e.getSource()==buttons[1]){
             run = false;
+            buttons[0].setEnabled(true);
+            buttons[1].setEnabled(false);
+            for(int i=0;i<12;i++){
+                in[i].setEditable(true);
+            }
 
         }
 

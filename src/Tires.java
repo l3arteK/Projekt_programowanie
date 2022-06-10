@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Tires extends Objects{
 
-    Objects objects;
     Random rand = new Random();
 
     public Tires(City_map map) {
@@ -12,6 +11,6 @@ public class Tires extends Objects{
 
         this.color = Color.darkGray;
         this.x_cord = rand.nextInt(map.size_x);
-        this.y_cord = rand.nextInt(map.size_x);
+        this.y_cord = rand.nextInt(map.size_y);
     }
 }
