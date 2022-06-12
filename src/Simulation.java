@@ -58,26 +58,25 @@ public class Simulation {
 
     for(;;) {
         if (map.run && !przygotowanie) {
-            for (int i = 0; i < map.dane[1]; i++) {
-                //System.out.println(i + "P");
+            for (int i = 0; i < map.dane[3]; i++) {
                 drivers.add(new Drifter(map));
             }
-            for (int i = 0; i < map.dane[0]; i++) {
+            for (int i = 0; i < map.dane[2]; i++) {
                 drivers.add(new Police(map, drivers));
             }
-            for (int i = 0; i < map.dane[2]; i++) {
+            for (int i = 0; i < map.dane[4]; i++) {
                 drivers.add(new Common_driver(map));
             }
-            for (int i = 0; i < map.dane[3]; i++) {
+            for (int i = 0; i < map.dane[5]; i++) {
                 objects.add(new Fuel(map));
             }
-            for (int i = 0; i < map.dane[5]; i++) {
+            for (int i = 0; i < map.dane[7]; i++) {
                 objects.add(new Tires(map));
             }
-            for (int i = 0; i < map.dane[7]; i++) {
+            for (int i = 0; i < map.dane[9]; i++) {
                 objects.add(new Bread(map));
             }
-            for (int i = 0; i < map.dane[11]; i++) {
+            for (int i = 0; i < map.dane[13]; i++) {
                 objects.add(new Speed_camera(map));
             }
             przygotowanie = true;
