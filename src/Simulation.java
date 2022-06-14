@@ -18,10 +18,12 @@ public class Simulation {
 
     static int[] dane_do_zapisu = new int[10];
     static int n;
+    static int object_max_amount;
+    static boolean drifter_searched;
     static boolean was_colission;
     static int moves_without_colisson;
     static boolean are_good_boys = false;
-
+    //static boolean more_sweets = true;
     static int good_boys_amount;
     static int moves_left_to_production = 3;
     static int amount_tires;
@@ -121,7 +123,7 @@ public class Simulation {
                 for(int i=0; i<drivers.size()-1; i++){
                     for(int j=i+1; j<drivers.size(); j++){
                         if((drivers.get(i).x == drivers.get(j).x) &&(drivers.get(i).y==drivers.get(j).y)){
-
+                          //  System.out.println("kolizja" + " x:"+drivers.get(i).x+" y: "+drivers.get(i).y+" Klasa: "+drivers.get(i).getClass()+" Klasa2: "+drivers.get(j).getClass());
                             was_colission = true;
                             moves_without_colisson = 0;
                             dane_do_zapisu[8]+=1;
@@ -157,7 +159,7 @@ public class Simulation {
                                     drivers.add(new Good_boys(map));
                                 }
                             }
-//
+//                            System.out.println("liczba kierowcow " + drivers.size());
                         }
                     }
                 }
@@ -167,6 +169,7 @@ public class Simulation {
                         if ((drivers.get(i).x == objects.get(j).x_cord) && (drivers.get(i).y == objects.get(j).y_cord)) {
 
 
+                           // System.out.println("kolizja z obiektem x: " + drivers.get(i).x + " y: " + drivers.get(i).y + " Klasa: " + drivers.get(i).getClass() + " Klasa2: " + objects.get(j).getClass());
                             was_colission = true;
                             moves_without_colisson = 0;
                             dane_do_zapisu[9]+=1;
@@ -175,12 +178,12 @@ public class Simulation {
                                 if (objects.get(j) instanceof Tires) {
                                     objects.remove(j);
                                     drivers.get(i).moves_tires += 10;
-
+                                    //System.out.println("Drifter pozostale ruchy na oponach: " + drivers.get(i).moves_tires);
                                 }
                                 else if (objects.get(j) instanceof Fuel) {
                                     objects.remove(j);
                                     drivers.get(i).moves_fuel += 5;
-
+                                    //System.out.println("Drifter pozostale ruchy na paliwie: " + drivers.get(i).moves_fuel);
                                 }
                                 else if (objects.get(j) instanceof Speed_camera) {
                                     drivers.remove(i);
@@ -190,12 +193,12 @@ public class Simulation {
                                 if (objects.get(j) instanceof Bread) {
                                     objects.remove(j);
                                     drivers.get(i).bread += 1;
-
+                                    //System.out.println("Zwykly kierowca podnisione chleby: " + drivers.get(i).bread);
                                 }
                                 else if (objects.get(j) instanceof Fuel) {
                                     objects.remove(j);
                                     drivers.get(i).moves_fuel += 15;
-
+                                    //System.out.println("Zwykly kierowca pozostale ruchy na paliwie: " + drivers.get(i).moves_fuel);
                                 }
                             }
                             else if (drivers.get(i) instanceof Good_boys) {
@@ -204,7 +207,7 @@ public class Simulation {
                                 }
                             }
                         }
-
+//                        System.out.println("liczba obiektow " + objects.size());
                     }
                 }
 
@@ -234,6 +237,19 @@ public class Simulation {
                         }
                     }
 
+//                    for (int i=0; i<objects.size(); i++) {
+
+//                    }
+
+                }
+
+//                System.out.println("amount of tires " + amount_tires);
+//                System.out.println("amount of fuel " + amount_fuel);
+//                System.out.println("amount of bread " + amount_bread);
+//                System.out.println("amount of sweets " + amount_sweets);
+//
+//                System.out.println("map.dane[5]" + map.dane[5]);
+//                System.out.println("map.dane[6]" + map.dane[6]);
 
                 if (amount_fuel >= City_map.dane[5] && amount_fuel < City_map.dane[6]) {
                     objects.add(new Fuel(map));
@@ -278,7 +294,7 @@ public class Simulation {
 
                 if (moves_left_to_production <= 0 && amount_sweets < City_map.dane[11]) {
 
-                    if ( good_boys_amount < 5) {
+                    if (are_good_boys && good_boys_amount < 5) {
                         objects.add(new Sweets(map,drivers,objects));
                         moves_left_to_production = 3;
                     }
