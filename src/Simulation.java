@@ -25,6 +25,10 @@ public class Simulation {
     //static boolean more_sweets = true;
     static int good_boys_amount;
     static int moves_left_to_production = 3;
+    static int amount_tires;
+    static int amount_fuel;
+    static int amount_bread;
+    static int amount_sweets;
 
    static Date data = new Date();
 
@@ -213,6 +217,59 @@ public class Simulation {
                     }
                 }
 
+                if (objects.size() != 0) {
+
+                    amount_tires = 0;
+                    amount_fuel = 0;
+                    amount_bread = 0;
+                    amount_sweets = 0;
+
+                    for (int i=0; i<objects.size(); i++) {
+
+                        if (objects.get(i) instanceof Tires) {
+                            amount_tires++;
+                        }
+
+                        if (objects.get(i) instanceof Fuel) {
+                            amount_fuel++;
+                        }
+
+                        if (objects.get(i) instanceof Bread) {
+                            amount_bread++;
+                        }
+
+                        if (objects.get(i) instanceof Sweets) {
+                            amount_sweets++;
+                        }
+                    }
+
+//                    for (int i=0; i<objects.size(); i++) {
+
+//                    }
+
+                }
+
+//                System.out.println("amount of tires " + amount_tires);
+//                System.out.println("amount of fuel " + amount_fuel);
+//                System.out.println("amount of bread " + amount_bread);
+//                System.out.println("amount of sweets " + amount_sweets);
+//
+//                System.out.println("map.dane[5]" + map.dane[5]);
+//                System.out.println("map.dane[6]" + map.dane[6]);
+
+                if (amount_fuel >= City_map.dane[5] && amount_fuel < City_map.dane[6]) {
+                    objects.add(new Fuel(map));
+                }
+
+                if (amount_tires >= City_map.dane[7] && amount_tires < City_map.dane[8]) {
+                    objects.add(new Tires(map));
+                }
+
+                if (amount_bread >= City_map.dane[9] && amount_bread < City_map.dane[10]) {
+                    objects.add(new Bread(map));
+                }
+
+
                 if (drivers.size() != 0) {
 
                     for (int i = 0; i < drivers.size(); i++) {
@@ -240,7 +297,7 @@ public class Simulation {
                     }
                 }
 
-                if (moves_left_to_production == 0) {
+                if (moves_left_to_production <= 0 && amount_sweets < City_map.dane[11]) {
 
                     if (are_good_boys && good_boys_amount < 5) {
                         objects.add(new Sweets(map,drivers,objects));
@@ -262,9 +319,7 @@ public class Simulation {
                 else {
                     moves_left_to_production--;
                 }
-
-
-
+                
 
                 System.out.println("liczba obiektow: " + objects.size());
                 System.out.println("liczba kierowcow: " + drivers.size());
