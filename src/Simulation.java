@@ -161,7 +161,7 @@ public class Simulation {
                         }
                     }
                 }
-                
+
                 for (int i = 0; i < drivers.size(); i++) {
                     for (int j = 0; j < objects.size(); j++) {
                         if ((drivers.get(i).x == objects.get(j).x_cord) && (drivers.get(i).y == objects.get(j).y_cord)) {
@@ -175,9 +175,13 @@ public class Simulation {
                             if (drivers.get(i) instanceof Drifter) {
                                 if (objects.get(j) instanceof Tires) {
                                     objects.remove(j);
+                                    drivers.get(i).moves_tires += 10;
+                                    //System.out.println("Drifter pozostale ruchy na oponach: " + drivers.get(i).moves_tires);
                                 }
                                 else if (objects.get(j) instanceof Fuel) {
                                     objects.remove(j);
+                                    drivers.get(i).moves_fuel += 5;
+                                    //System.out.println("Drifter pozostale ruchy na paliwie: " + drivers.get(i).moves_fuel);
                                 }
                                 else if (objects.get(j) instanceof Speed_camera) {
                                     drivers.remove(i);
@@ -186,9 +190,13 @@ public class Simulation {
                             else if (drivers.get(i) instanceof Common_driver) {
                                 if (objects.get(j) instanceof Bread) {
                                     objects.remove(j);
+                                    drivers.get(i).bread += 1;
+                                    //System.out.println("Zwykly kierowca podnisione chleby: " + drivers.get(i).bread);
                                 }
                                 else if (objects.get(j) instanceof Fuel) {
                                     objects.remove(j);
+                                    drivers.get(i).moves_fuel += 15;
+                                    //System.out.println("Zwykly kierowca pozostale ruchy na paliwie: " + drivers.get(i).moves_fuel);
                                 }
                             }
                             else if (drivers.get(i) instanceof Good_boys) {
@@ -198,6 +206,23 @@ public class Simulation {
                             }
                         }
 //                        System.out.println("liczba obiektow " + objects.size());
+                    }
+                }
+
+                if (drivers.size() != 0) {
+
+                    for (int i = 0; i < drivers.size(); i++) {
+
+                        if (drivers.get(i) instanceof Drifter) {
+                            if (drivers.get(i).moves_fuel == 0 || drivers.get(i).moves_tires == 0) {
+                                drivers.remove(i);
+                            }
+                        }
+                        else if (drivers.get(i) instanceof Common_driver) {
+                            if (drivers.get(i).moves_fuel == 0) {
+                                drivers.remove(i);
+                            }
+                        }
                     }
                 }
 
@@ -222,7 +247,7 @@ public class Simulation {
                     moves_without_colisson++;
                 }
 
-                if (moves_without_colisson == 10) {
+                if (moves_without_colisson == 30) {
                     System.out.println("Koniec symulacji - zbyt wiele ruchow bez kolizji pomiedzy obiektami");
                     return;
                 }

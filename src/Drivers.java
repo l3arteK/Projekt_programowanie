@@ -20,6 +20,9 @@ public class Drivers
     int y;
     int max_x;
     int max_y;
+    int moves_tires;
+    int moves_fuel;
+    int bread;
     Random rand = new Random();
     public Drivers(City_map map){
 
