@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;*/
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,12 +18,10 @@ public class Simulation {
 
     static int[] dane_do_zapisu = new int[10];
     static int n;
-    static int object_max_amount;
-    static boolean drifter_searched;
     static boolean was_colission;
     static int moves_without_colisson;
     static boolean are_good_boys = false;
-    //static boolean more_sweets = true;
+
     static int good_boys_amount;
     static int moves_left_to_production = 3;
     static int amount_tires;
@@ -34,7 +33,7 @@ public class Simulation {
 
 
    static void liczenie(ArrayList<Drivers> kierowcy, ArrayList<Objects> objekty){
-       for(int i=0;i<10;i++){dane_do_zapisu[i]=0;}
+       for(int i=0;i<8;i++){dane_do_zapisu[i]=0;}
        for(Drivers kierowca:kierowcy){
            if(kierowca instanceof Drifter)
                dane_do_zapisu[0]+=1;
@@ -54,7 +53,7 @@ public class Simulation {
            if(obiekt instanceof Sweets)
                dane_do_zapisu[7]+=1;}
    }
-        public static void main(String[] args) throws InterruptedException, FileNotFoundException {
+        public static void main(String[] args) throws InterruptedException, IOException {
 
             City_map map = new City_map();
             int x=2;
@@ -89,11 +88,10 @@ public class Simulation {
             for (int i = 0; i < map.dane[9]; i++) {
                 objects.add(new Bread(map));
             }
-            for (int i = 0; i < map.dane[13]; i++) {
+            for (int i = 0; i < map.dane[12]; i++) {
                 objects.add(new Speed_camera(map));
             }
             przygotowanie = true;
-            //object_max_amount += (map.dane[5] + map.dane[7] + map.dane[9] + map.dane[13]);
 
         }else if(map.run){
             while(map.run){
@@ -101,7 +99,7 @@ public class Simulation {
 
                 liczenie(drivers,objects);
 
-                zapis.format("%-7d %15d %15d %15d %15d %15d %15d %15d %15d %15d %15d %25d %35d\n",n,drivers.size(),objects.size(),dane_do_zapisu[0],dane_do_zapisu[1],dane_do_zapisu[2],dane_do_zapisu[3],dane_do_zapisu[4],dane_do_zapisu[5],dane_do_zapisu[6],dane_do_zapisu[7],dane_do_zapisu[8],dane_do_zapisu[9]);
+                zapis.format("%-7d %15d %15d %15d %15d %15d %15d %15d %15d %15d %15d %25d %35d\n",n,drivers.size(),objects.size(),dane_do_zapisu[1],dane_do_zapisu[3],dane_do_zapisu[0],dane_do_zapisu[2],dane_do_zapisu[4],dane_do_zapisu[5],dane_do_zapisu[6],dane_do_zapisu[7],dane_do_zapisu[8],dane_do_zapisu[9]);
                 for(int i=0; i<map.size_x; i++){
                     for(int j=0; j<map.size_y; j++){
                         map.panels[i][j].setBackground(Color.gray);
@@ -109,19 +107,13 @@ public class Simulation {
                 }
                 for (Drivers driver : drivers) {
                     driver.move();
-                    //System.out.println(driver.x);
-                    //System.out.println(driver.y);
                 }
                 for (Objects object : objects) {
                     object.respawn();
                 }
 
 
-                //while (objects.size() < ())
 
-
-                //System.out.println("ruch: "+n);
-               // System.out.println("");
                 //check_colision
 
                 was_colission = false;
@@ -129,7 +121,7 @@ public class Simulation {
                 for(int i=0; i<drivers.size()-1; i++){
                     for(int j=i+1; j<drivers.size(); j++){
                         if((drivers.get(i).x == drivers.get(j).x) &&(drivers.get(i).y==drivers.get(j).y)){
-                          //  System.out.println("kolizja" + " x:"+drivers.get(i).x+" y: "+drivers.get(i).y+" Klasa: "+drivers.get(i).getClass()+" Klasa2: "+drivers.get(j).getClass());
+
                             was_colission = true;
                             moves_without_colisson = 0;
                             dane_do_zapisu[8]+=1;
@@ -165,7 +157,7 @@ public class Simulation {
                                     drivers.add(new Good_boys(map));
                                 }
                             }
-//                            System.out.println("liczba kierowcow " + drivers.size());
+//
                         }
                     }
                 }
@@ -175,7 +167,6 @@ public class Simulation {
                         if ((drivers.get(i).x == objects.get(j).x_cord) && (drivers.get(i).y == objects.get(j).y_cord)) {
 
 
-                           // System.out.println("kolizja z obiektem x: " + drivers.get(i).x + " y: " + drivers.get(i).y + " Klasa: " + drivers.get(i).getClass() + " Klasa2: " + objects.get(j).getClass());
                             was_colission = true;
                             moves_without_colisson = 0;
                             dane_do_zapisu[9]+=1;
@@ -184,12 +175,12 @@ public class Simulation {
                                 if (objects.get(j) instanceof Tires) {
                                     objects.remove(j);
                                     drivers.get(i).moves_tires += 10;
-                                    //System.out.println("Drifter pozostale ruchy na oponach: " + drivers.get(i).moves_tires);
+
                                 }
                                 else if (objects.get(j) instanceof Fuel) {
                                     objects.remove(j);
                                     drivers.get(i).moves_fuel += 5;
-                                    //System.out.println("Drifter pozostale ruchy na paliwie: " + drivers.get(i).moves_fuel);
+
                                 }
                                 else if (objects.get(j) instanceof Speed_camera) {
                                     drivers.remove(i);
@@ -199,12 +190,12 @@ public class Simulation {
                                 if (objects.get(j) instanceof Bread) {
                                     objects.remove(j);
                                     drivers.get(i).bread += 1;
-                                    //System.out.println("Zwykly kierowca podnisione chleby: " + drivers.get(i).bread);
+
                                 }
                                 else if (objects.get(j) instanceof Fuel) {
                                     objects.remove(j);
                                     drivers.get(i).moves_fuel += 15;
-                                    //System.out.println("Zwykly kierowca pozostale ruchy na paliwie: " + drivers.get(i).moves_fuel);
+
                                 }
                             }
                             else if (drivers.get(i) instanceof Good_boys) {
@@ -213,7 +204,7 @@ public class Simulation {
                                 }
                             }
                         }
-//                        System.out.println("liczba obiektow " + objects.size());
+
                     }
                 }
 
@@ -243,19 +234,6 @@ public class Simulation {
                         }
                     }
 
-//                    for (int i=0; i<objects.size(); i++) {
-
-//                    }
-
-                }
-
-//                System.out.println("amount of tires " + amount_tires);
-//                System.out.println("amount of fuel " + amount_fuel);
-//                System.out.println("amount of bread " + amount_bread);
-//                System.out.println("amount of sweets " + amount_sweets);
-//
-//                System.out.println("map.dane[5]" + map.dane[5]);
-//                System.out.println("map.dane[6]" + map.dane[6]);
 
                 if (amount_fuel >= City_map.dane[5] && amount_fuel < City_map.dane[6]) {
                     objects.add(new Fuel(map));
@@ -297,12 +275,12 @@ public class Simulation {
                     }
                 }
 
+
                 if (moves_left_to_production <= 0 && amount_sweets < City_map.dane[11]) {
 
-                    if (are_good_boys && good_boys_amount < 5) {
+                    if ( good_boys_amount < 5) {
                         objects.add(new Sweets(map,drivers,objects));
                         moves_left_to_production = 3;
-                        //more_sweets = false;
                     }
                     else if (are_good_boys && good_boys_amount >= 5 && good_boys_amount < 10) {
                         objects.add(new Sweets(map,drivers,objects));
@@ -319,22 +297,12 @@ public class Simulation {
                 else {
                     moves_left_to_production--;
                 }
-                
 
-                System.out.println("liczba obiektow: " + objects.size());
-                System.out.println("liczba kierowcow: " + drivers.size());
+                //#Warunki zakończenia symulacji
 
-                drifter_searched = false;
-
-                for (Drivers driver : drivers) {
-
-                    if (driver instanceof Drifter) {
-                        drifter_searched = true;
-                    }
-                }
-
-                if (!drifter_searched) {
+                if (dane_do_zapisu[0]<1) {
                     System.out.println("Koniec symulacji - brak drifterow na mapie");
+                    zapis.close();
                     return;
                 }
 
@@ -344,6 +312,7 @@ public class Simulation {
 
                 if (moves_without_colisson == 30) {
                     System.out.println("Koniec symulacji - zbyt wiele ruchow bez kolizji pomiedzy obiektami");
+                    zapis.close();
                     return;
                 }
 

@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.Random;
 
-public class Objects {
+abstract public class Objects {
     protected int x_cord;
     protected int y_cord;
 

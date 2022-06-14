@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class Drivers
+ abstract public class Drivers
 {
     /*
     protected int id_dr;

@@ -1,14 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 import javax.swing.JTextField;
 
 import static java.lang.Integer.parseInt;
@@ -23,8 +19,8 @@ public class City_map extends JFrame implements ActionListener {
     int size_x;
     int size_y;
 
-    JTextField[] in = new JTextField[14];
-    JLabel[] out = new JLabel[14];
+    JTextField[] in = new JTextField[13];
+    JLabel[] out = new JLabel[13];
     JButton[] buttons = new JButton[2];
     boolean run = false;
     static int[] dane = new int[15];
@@ -93,7 +89,7 @@ public class City_map extends JFrame implements ActionListener {
         tekst_legendy[8].setText("Opony");
 
         //#TWORZENIE MENU
-        for(int i=0;i<14;i++){
+        for(int i=0;i<13;i++){
             out[i] = new JLabel();
             in[i] = new JTextField();
             out[i].setHorizontalAlignment(JLabel.CENTER);
@@ -110,12 +106,10 @@ public class City_map extends JFrame implements ActionListener {
         out[8].setText("Maksymalna ilość opon");
         out[9].setText("Minmalna ilość chleba");
         out[10].setText("Maksymalna ilość chleba");
-        out[11].setText("Minimalna ilość cukierków");
-        out[12].setText("Maksymalna ilość cukierków");
-        out[13].setText("Ilość fotoradarów");
+        out[11].setText("Maksymalna ilość cukierków");
+        out[12].setText("Ilość fotoradarów");
 
-        for(int i=0;i<14;i++){
-            //in[i].setPreferredSize(new Dimension(30,20));
+        for(int i=0;i<13;i++){
             menu.add(out[i]);
             menu.add(in[i]);
         }
@@ -149,7 +143,7 @@ public class City_map extends JFrame implements ActionListener {
         StringBuilder sb;
         String text;
         if(e.getSource()==buttons[0]) {
-            for (int i = 0; i < 14; i++) {
+            for (int i = 0; i < 13; i++) {
                 sb = new StringBuilder();
                 if(!Objects.equals(in[i].getText(), "")){
                     chars = in[i].getText().toCharArray();
@@ -171,19 +165,26 @@ public class City_map extends JFrame implements ActionListener {
                     dane[i] = 0;
                 }
             }
-            if(k==14){
+            if(k==13 && dane[0]*dane[1]>dane[2]+dane[3]+dane[4]+dane[5]+dane[7]+dane[9]+dane[12]){
                 tworzenie_mapy(dane[0],dane[1]);
                 buttons[0].setEnabled(false);
                 buttons[1].setEnabled(true);
                 run = true;
             }
+            else{
+                for(int i=0;i<13;i++){
+                    in[i].setEditable(true);
+                }
+            }
         }else if(e.getSource()==buttons[1]){
             run = false;
             buttons[0].setEnabled(true);
             buttons[1].setEnabled(false);
-            for(int i=0;i<14;i++){
+            for(int i=0;i<13;i++){
                 in[i].setEditable(true);
             }
+            mapa = new JPanel();
+            tworzenie_mapy(0,0);
 
         }
 
