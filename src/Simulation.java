@@ -17,6 +17,11 @@ public class Simulation {
 
     static int[] dane_do_zapisu = new int[10];
     static int n;
+    static int object_max_amount;
+    static boolean drifter_searched;
+    static boolean was_colission;
+    static int moves_without_colisson;
+
    static Date data = new Date();
 
 
@@ -80,6 +85,8 @@ public class Simulation {
                 objects.add(new Speed_camera(map));
             }
             przygotowanie = true;
+            //object_max_amount += (map.dane[5] + map.dane[7] + map.dane[9] + map.dane[13]);
+
         }else if(map.run){
             while(map.run){
                 n+=1;
@@ -102,14 +109,21 @@ public class Simulation {
                 }
 
 
+                //while (objects.size() < ())
+
+
                 //System.out.println("ruch: "+n);
                // System.out.println("");
                 //check_colision
+
+                was_colission = false;
 
                 for(int i=0; i<drivers.size()-1; i++){
                     for(int j=i+1; j<drivers.size(); j++){
                         if((drivers.get(i).x == drivers.get(j).x) &&(drivers.get(i).y==drivers.get(j).y)){
                           //  System.out.println("kolizja" + " x:"+drivers.get(i).x+" y: "+drivers.get(i).y+" Klasa: "+drivers.get(i).getClass()+" Klasa2: "+drivers.get(j).getClass());
+                            was_colission = true;
+                            moves_without_colisson = 0;
                             dane_do_zapisu[8]+=1;
 
                             if(drivers.get(i) instanceof Drifter){
@@ -143,18 +157,21 @@ public class Simulation {
                                     drivers.add(new Good_boys(map));
                                 }
                             }
-                            System.out.println(drivers.size());
+//                            System.out.println("liczba kierowcow " + drivers.size());
                         }
                     }
                 }
-
+                
                 for (int i = 0; i < drivers.size(); i++) {
                     for (int j = 0; j < objects.size(); j++) {
                         if ((drivers.get(i).x == objects.get(j).x_cord) && (drivers.get(i).y == objects.get(j).y_cord)) {
 
 
                            // System.out.println("kolizja z obiektem x: " + drivers.get(i).x + " y: " + drivers.get(i).y + " Klasa: " + drivers.get(i).getClass() + " Klasa2: " + objects.get(j).getClass());
+                            was_colission = true;
+                            moves_without_colisson = 0;
                             dane_do_zapisu[9]+=1;
+
                             if (drivers.get(i) instanceof Drifter) {
                                 if (objects.get(j) instanceof Tires) {
                                     objects.remove(j);
@@ -179,13 +196,36 @@ public class Simulation {
                                     objects.remove(j);
                                 }
                             }
-
                         }
+//                        System.out.println("liczba obiektow " + objects.size());
                     }
                 }
 
-                //System.out.println("liczba obiektow: " + objects.size());
-                //System.out.println("liczba kierowcow: " + drivers.size());
+                System.out.println("liczba obiektow: " + objects.size());
+                System.out.println("liczba kierowcow: " + drivers.size());
+
+                drifter_searched = false;
+
+                for (Drivers driver : drivers) {
+
+                    if (driver instanceof Drifter) {
+                        drifter_searched = true;
+                    }
+                }
+
+                if (!drifter_searched) {
+                    System.out.println("Koniec symulacji - brak drifterow na mapie");
+                    return;
+                }
+
+                if (!was_colission) {
+                    moves_without_colisson++;
+                }
+
+                if (moves_without_colisson == 10) {
+                    System.out.println("Koniec symulacji - zbyt wiele ruchow bez kolizji pomiedzy obiektami");
+                    return;
+                }
 
                 TimeUnit.SECONDS.sleep(1);
 
