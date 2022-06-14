@@ -7,14 +7,10 @@ public class Sweets extends Objects{
 
     ArrayList<Objects> objects;
     ArrayList<Drivers> drivers;
-    Random rand = new Random();
 
     public Sweets(City_map map, ArrayList <Drivers> drivers, ArrayList<Objects> objects) {
         super(map);
-
         this.color = Color.yellow;
-        this.x_cord = rand.nextInt(map.size_x);
-        this.y_cord = rand.nextInt(map.size_x);
         this.drivers = drivers;
         this.objects = objects;
     }

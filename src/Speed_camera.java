@@ -3,17 +3,12 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Speed_camera extends Objects {
-    //private final int amount = 15;
 
-    Objects objects;
-    Random rand = new Random();
 
     public Speed_camera(City_map map) {
         super(map);
-
         this.color = Color.magenta;
-        this.x_cord = rand.nextInt(map.size_x);
-        this.y_cord = rand.nextInt(map.size_x);
+
     }
 
 //    void respawn() {

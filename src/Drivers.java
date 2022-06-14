@@ -26,11 +26,22 @@ public class Drivers
     Random rand = new Random();
     public Drivers(City_map map){
 
+        int i=0;
         this.map = map;
         this.max_x = map.size_x;
         this.max_y = map.size_y;
         this.x = rand.nextInt(max_x);
         this.y = rand.nextInt(max_y);
+        while(map.panels[x][y].getBackground()!=Color.gray){
+            this.x = rand.nextInt(max_x);
+            this.y = rand.nextInt(max_y);
+            i+=1;
+            if(i>(max_y*max_y)){
+                map.run = false;
+                break;
+            }
+        }
+        map.panels[x][y].setBackground(color);
 
     }
 
