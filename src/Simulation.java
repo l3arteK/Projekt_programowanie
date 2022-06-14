@@ -21,6 +21,10 @@ public class Simulation {
     static boolean drifter_searched;
     static boolean was_colission;
     static int moves_without_colisson;
+    static boolean are_good_boys = false;
+    //static boolean more_sweets = true;
+    static int good_boys_amount;
+    static int moves_left_to_production = 3;
 
    static Date data = new Date();
 
@@ -224,7 +228,43 @@ public class Simulation {
                             }
                         }
                     }
+
+                    good_boys_amount = 0;
+
+                    for (int i=0; i<drivers.size(); i++) {
+
+                        if (drivers.get(i) instanceof Good_boys) {
+                            are_good_boys = true;
+                            good_boys_amount++;
+                        }
+                    }
                 }
+
+                if (moves_left_to_production == 0) {
+
+                    if (are_good_boys && good_boys_amount < 5) {
+                        objects.add(new Sweets(map,drivers,objects));
+                        moves_left_to_production = 3;
+                        //more_sweets = false;
+                    }
+                    else if (are_good_boys && good_boys_amount >= 5 && good_boys_amount < 10) {
+                        objects.add(new Sweets(map,drivers,objects));
+                        objects.add(new Sweets(map,drivers,objects));
+                        moves_left_to_production = 3;
+                    }
+                    else if (are_good_boys && good_boys_amount > 10) {
+                        objects.add(new Sweets(map,drivers,objects));
+                        objects.add(new Sweets(map,drivers,objects));
+                        objects.add(new Sweets(map,drivers,objects));
+                        moves_left_to_production = 3;
+                    }
+                }
+                else {
+                    moves_left_to_production--;
+                }
+
+
+
 
                 System.out.println("liczba obiektow: " + objects.size());
                 System.out.println("liczba kierowcow: " + drivers.size());
